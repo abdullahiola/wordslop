@@ -12,10 +12,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "WordSlop Simulator — Agentic AI Rhetoric Engine",
+  title: "WordSlop Simulator — Neural Crypto Gossip Engine",
   description:
-    "Watch two autonomous AI agents generate increasingly verbose, cliché-ridden text in real-time. A satirical demonstration of LLM wordslop.",
-  keywords: ["AI", "wordslop", "agentic", "LLM", "simulation", "rhetoric"],
+    "Two autonomous Claude agents debate crypto gossip in real-time, drowning every hot take in maximum degen slop. A live AI rhetoric experiment.",
+  keywords: ["AI", "wordslop", "agentic", "LLM", "simulation", "crypto", "degen", "Claude"],
 };
 
 export default function RootLayout({ children }) {

@@ -79,6 +79,14 @@ function revealWordByWord(text, setTextFn, isRunningRef, delayMs = 80) {
   });
 }
 
+// Format elapsed time as mm:ss
+function formatElapsed(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const m = Math.floor(totalSec / 60).toString().padStart(2, "0");
+  const s = (totalSec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
 export default function SlopSimulator() {
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(30);
@@ -93,6 +101,7 @@ export default function SlopSimulator() {
   const [totalSlopCount, setTotalSlopCount] = useState(0);
   const [totalWords, setTotalWords] = useState(0);
   const [slopPerMinute, setSlopPerMinute] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
 
   // Refs
   const streamRef = useRef(null);
@@ -110,6 +119,16 @@ export default function SlopSimulator() {
       streamRef.current.scrollTop = streamRef.current.scrollHeight;
     }
   }, [messages, currentText]);
+
+  // Timer
+  useEffect(() => {
+    if (isRunning && startTimeRef.current) {
+      const timer = setInterval(() => {
+        setElapsed(Date.now() - startTimeRef.current);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [isRunning]);
 
   // Typing animation for template fallback
   const typeText = useCallback((text, delayMs) => {
@@ -221,6 +240,7 @@ export default function SlopSimulator() {
     setTotalSlopCount(0);
     setTotalWords(0);
     setSlopPerMinute(0);
+    setElapsed(0);
     setApiStatus("unknown");
     startTimeRef.current = null;
   };
@@ -238,11 +258,16 @@ export default function SlopSimulator() {
     <div className="app-container">
       {/* HEADER */}
       <header className="header">
-        <div className="header-badge">LIVE CONVERSATION</div>
+        <div className="header-badge">
+          {isRunning ? "◉ LIVE — STREAMING" : "SYSTEM READY"}
+        </div>
         <h1>WordSlop Simulator</h1>
         <p className="header-subtitle">
-          Two AI degens gossip about crypto's biggest names — drowning every hot take in{" "}
-          <span style={{ color: "var(--slop-text)" }}>maximum degen slop</span>.
+          Two autonomous AI agents debate crypto&apos;s biggest names —{" "}
+          drowning every take in{" "}
+          <span style={{ color: "var(--slop-text)", textShadow: "0 0 12px rgba(255, 204, 51, 0.3)" }}>
+            maximum degen slop
+          </span>
         </p>
       </header>
 
@@ -250,21 +275,34 @@ export default function SlopSimulator() {
       <div className="controls-bar">
         {!isRunning ? (
           <button id="start-btn" className="btn btn-primary" onClick={handleStart}>
-            ▶ Start Conversation
+            ▶ INITIALIZE
           </button>
         ) : (
           <button id="stop-btn" className="btn btn-danger" onClick={handleStop}>
-            ⏹ Stop
+            ⏹ TERMINATE
           </button>
         )}
-        <button id="reset-btn" className="btn" onClick={handleReset}>↺ Reset</button>
+        <button id="reset-btn" className="btn" onClick={handleReset}>↺ PURGE</button>
+        {isRunning && (
+          <span style={{
+            fontFamily: "var(--font-code)",
+            fontSize: "11px",
+            color: "var(--text-muted)",
+            letterSpacing: "1px",
+            marginLeft: "8px",
+          }}>
+            UPTIME {formatElapsed(elapsed)}
+          </span>
+        )}
       </div>
 
       {/* API STATUS */}
       {apiStatus !== "unknown" && (
         <div className={`api-status-badge ${apiStatus}`}>
           <span className="api-status-dot" />
-          {apiStatus === "connected" ? "Claude is streaming live thoughts" : "Falling back to templates"}
+          {apiStatus === "connected"
+            ? "NEURAL LINK ACTIVE — Claude streaming live"
+            : "FALLBACK MODE — using local templates"}
         </div>
       )}
 
@@ -275,7 +313,7 @@ export default function SlopSimulator() {
           <div className="metric-value yellow">{totalSlopCount}</div>
         </div>
         <div className="metric-card">
-          <div className="metric-label">Slop Density</div>
+          <div className="metric-label">Density</div>
           <div className={`metric-value ${overallDensity > 15 ? "red" : overallDensity > 8 ? "yellow" : "green"}`}>
             {overallDensity}%
           </div>
@@ -285,11 +323,11 @@ export default function SlopSimulator() {
           <div className="metric-value purple">{messages.length}</div>
         </div>
         <div className="metric-card">
-          <div className="metric-label">Total Words</div>
+          <div className="metric-label">Words</div>
           <div className="metric-value cyan">{totalWords}</div>
         </div>
         <div className="metric-card">
-          <div className="metric-label">Slop / Min</div>
+          <div className="metric-label">Slop/Min</div>
           <div className="metric-value pink">{slopPerMinute}</div>
         </div>
       </div>
@@ -298,10 +336,11 @@ export default function SlopSimulator() {
       <div className="conversation-stream" ref={streamRef}>
         {messages.length === 0 && !currentAgent && (
           <div className="empty-state">
-            <div className="empty-state-icon">💬</div>
+            <div className="empty-state-icon">⟁</div>
             <div className="empty-state-text">
-              Press Start to watch Claude Sonnet and Claude Opus<br />
-              debate crypto in maximum slop.
+              SYSTEM IDLE<br />
+              Press INITIALIZE to deploy Claude Sonnet + Opus<br />
+              into autonomous crypto gossip mode
             </div>
           </div>
         )}
@@ -324,7 +363,7 @@ export default function SlopSimulator() {
               <span className="thought-name">
                 {currentAgent === "a" ? "Claude Sonnet" : "Claude Opus"}
               </span>
-              <span className="thinking-indicator">thinking...</span>
+              <span className="thinking-indicator">streaming...</span>
             </div>
             <div className="thought-text">
               {renderText(currentText)}
