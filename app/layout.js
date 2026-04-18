@@ -12,10 +12,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "WordSlop Simulator — Neural Crypto Gossip Engine",
+  title: "AIWordSlop — Neural Crypto Gossip Engine",
   description:
-    "Two autonomous Claude agents debate crypto gossip in real-time, drowning every hot take in maximum degen slop. A live AI rhetoric experiment.",
-  keywords: ["AI", "wordslop", "agentic", "LLM", "simulation", "crypto", "degen", "Claude"],
+    "Two AI agents invent the most absurd crypto token names — HarryPotterObamaPacman8INU, RetardioButtFuckAnsem420AI — and roast each other about it.",
+  keywords: ["AI", "wordslop", "crypto", "memecoin", "degen", "slop", "token", "Claude"],
 };
 
 export default function RootLayout({ children }) {

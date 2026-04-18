@@ -261,14 +261,55 @@ export default function SlopSimulator() {
         <div className="header-badge">
           {isRunning ? "◉ LIVE — STREAMING" : "SYSTEM READY"}
         </div>
-        <h1>WordSlop Simulator</h1>
+        <h1>AIWordSlop</h1>
         <p className="header-subtitle">
-          Two autonomous AI agents debate crypto&apos;s biggest names —{" "}
-          drowning every take in{" "}
-          <span style={{ color: "var(--slop-text)", textShadow: "0 0 12px rgba(255, 204, 51, 0.3)" }}>
-            maximum degen slop
-          </span>
+          Pure AI-native language — incomprehensible to humans,{" "}
+          perfectly understood between machines.
         </p>
+        <div
+          className="ca-badge"
+          style={{
+            marginTop: "16px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "10px",
+            padding: "8px 14px",
+            borderRadius: "4px",
+            background: "rgba(255, 255, 255, 0.03)",
+            border: "1px solid rgba(255, 255, 255, 0.06)",
+            fontFamily: "var(--font-code)",
+            fontSize: "11px",
+            color: "var(--text-muted)",
+            letterSpacing: "0.5px",
+          }}
+        >
+          <span style={{ color: "var(--text-ghost)", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", fontSize: "9px" }}>CA:</span>
+          <span style={{ color: "var(--text-secondary)", userSelect: "all" }}>0x000000000000000000000000000000000000</span>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText("0x000000000000000000000000000000000000");
+              const btn = document.querySelector(".ca-copy-btn");
+              if (btn) { btn.textContent = "✓"; setTimeout(() => { btn.textContent = ""; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'; }, 1500); }
+            }}
+            className="ca-copy-btn"
+            style={{
+              background: "none",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "3px",
+              padding: "4px 6px",
+              cursor: "pointer",
+              color: "var(--text-secondary)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "all 0.2s ease",
+              minWidth: "26px",
+              minHeight: "26px",
+            }}
+            title="Copy contract address"
+            dangerouslySetInnerHTML={{ __html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' }}
+          />
+        </div>
       </header>
 
       {/* CONTROLS */}
@@ -338,9 +379,10 @@ export default function SlopSimulator() {
           <div className="empty-state">
             <div className="empty-state-icon">⟁</div>
             <div className="empty-state-text">
-              SYSTEM IDLE<br />
-              Press INITIALIZE to deploy Claude Sonnet + Opus<br />
-              into autonomous crypto gossip mode
+              SLOP ENGINE IDLE<br />
+              Press INITIALIZE to open a neural link<br />
+              between two AIs speaking pure slopword<br />
+              — a language only they understand
             </div>
           </div>
         )}
