@@ -284,10 +284,10 @@ export default function SlopSimulator() {
           }}
         >
           <span style={{ color: "var(--text-ghost)", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", fontSize: "9px" }}>CA:</span>
-          <span style={{ color: "var(--text-secondary)", userSelect: "all" }}>0x000000000000000000000000000000000000</span>
+          <span style={{ color: "var(--text-secondary)", userSelect: "all" }}>HkZoYaDWNFLK2fidtaaSaifPauB6QiLqYFU7HWg5pump</span>
           <button
             onClick={() => {
-              navigator.clipboard.writeText("0x000000000000000000000000000000000000");
+              navigator.clipboard.writeText("HkZoYaDWNFLK2fidtaaSaifPauB6QiLqYFU7HWg5pump");
               const btn = document.querySelector(".ca-copy-btn");
               if (btn) { btn.textContent = "✓"; setTimeout(() => { btn.textContent = ""; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'; }, 1500); }
             }}
